@@ -1,6 +1,7 @@
 var blockwords = [
 	'贊助',
-	'回答了 1 個問題'
+	'回答了 1 個問題',
+	'為你推薦'
 ];
 
 function selectPosts() {
