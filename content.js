@@ -3,7 +3,8 @@ var blockwords = [
 	'回答了 1 個問題',
 	'為你推薦',
 	'已留言回應',
-	'回覆了 1 則留言'
+	'回覆了 1 則留言',
+	'邀請你參與'
 ];
 
 function selectPosts() {
