@@ -8,7 +8,7 @@ var blockwords = [
 ];
 
 function selectPosts() {
-	var posts = document.querySelectorAll('.userContentWrapper');
+	var posts = document.querySelectorAll('[data-pagelet^="FeedUnit"');
 	var ret = [];
 	posts.forEach(function test(p) {
 		blockwords.forEach(function test2(word) {
@@ -30,18 +30,27 @@ function filterPosts(scroll_pos) {
 		console.log('removed '+text);
 		el.parentElement.removeChild(el);
 	});
+	remove_right_sidebar_ad();
 }
 
 window.addEventListener('scroll', function(e) {
-  last_known_scroll_position = window.scrollY;
-  if (!ticking) {
-    window.requestAnimationFrame(function() {
-		console.log('filtering...');
-      filterPosts(last_known_scroll_position);
-      ticking = false;
-    });
-  }
-  ticking = true;
+	last_known_scroll_position = window.scrollY;
+	if (!ticking) {
+		window.requestAnimationFrame(function() {
+			console.log('filtering...');
+			filterPosts(last_known_scroll_position);
+			ticking = false;
+		});
+		//ticking = true;
+	}
 });
+
+function remove_right_sidebar_ad() {
+	var el = document.querySelectorAll("[data-pagelet='RightRail']");
+	if ( el[0].textContent.includes('贊助') ) {
+		el[0].removeChild(el[0].firstElementChild);
+	}
+}
+
 
 console.log('loaded!');
