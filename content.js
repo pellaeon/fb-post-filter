@@ -18,7 +18,6 @@ function selectPosts() {
 		blockwords.forEach(function test2(word) {
 			if ( p.textContent.includes(word) ) {
 				ret.push(p);
-				continue;
 			}
 		});
 		blockpatterns.forEach(function test2(pattern) {
