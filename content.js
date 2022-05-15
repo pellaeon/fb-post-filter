@@ -1,5 +1,4 @@
 var blockwords = [
-	'贊-助',
 	'贊助',
 	'回答了 1 個問題',
 	'為你推薦',
@@ -8,12 +7,22 @@ var blockwords = [
 	'邀請你參與'
 ];
 
+var blockpatterns = [
+	/贊.{0,20}助/
+];
+
 function selectPosts() {
 	var posts = document.querySelectorAll('[data-pagelet^="FeedUnit"');
 	var ret = [];
 	posts.forEach(function test(p) {
 		blockwords.forEach(function test2(word) {
-			if ( p.textContent.includes(word) ) { ret.push(p); }
+			if ( p.textContent.includes(word) ) {
+				ret.push(p);
+				continue;
+			}
+		});
+		blockpatterns.forEach(function test2(pattern) {
+			if ( p.textContent.match(word) ) { ret.push(p); }
 		});
 	});
 	return ret;
