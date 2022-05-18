@@ -21,7 +21,7 @@ function selectPosts() {
 			}
 		});
 		blockpatterns.forEach(function test2(pattern) {
-			if ( p.textContent.match(word) ) { ret.push(p); }
+			if ( p.textContent.match(pattern) ) { ret.push(p); }
 		});
 	});
 	return ret;
