@@ -4,7 +4,9 @@ var blockwords = [
 	'為你推薦',
 	'已留言回應',
 	'回覆了 1 則留言',
-	'邀請你參與'
+	'邀請你參與',
+	'追蹤',
+	'加入',
 ];
 
 var blockpatterns = [
@@ -12,9 +14,17 @@ var blockpatterns = [
 ];
 
 function selectPosts() {
-	var posts = document.querySelectorAll('[data-pagelet^="FeedUnit"');
+	/* Heuristics:
+	 * 1. the post div is always a sibling of another post div
+	 * 2. it has span and a
+	 * 3. it has svg (the "sharing scope", usually a globe icon)
+	 */
+	var roughselection1 = document.querySelectorAll('div + div:has(span):has(a):has(svg)');
+	//var roughselection1 = document.querySelectorAll('div + div:has(span)');
+	// select further filter the divs that are larger than 300x300 but smaller than the window
+	var roughselection2 = Array.from(roughselection1).filter(a => a.clientWidth > 300 && a.clientHeight > 300 && a.clientWidth < window.innerWidth && a.clientHeight < window.innerHeight);
 	var ret = [];
-	posts.forEach(function test(p) {
+	roughselection2.forEach(function test(p) {
 		blockwords.forEach(function test2(word) {
 			if ( p.textContent.includes(word) ) {
 				ret.push(p);
@@ -39,7 +49,6 @@ function filterPosts(scroll_pos) {
 		console.log('removed '+text);
 		el.parentElement.removeChild(el);
 	});
-	remove_right_sidebar_ad();
 }
 
 window.addEventListener('scroll', function(e) {
@@ -53,13 +62,5 @@ window.addEventListener('scroll', function(e) {
 		//ticking = true;
 	}
 });
-
-function remove_right_sidebar_ad() {
-	var el = document.querySelectorAll("[data-pagelet='RightRail']");
-	if ( el[0].textContent.includes('贊助') ) {
-		el[0].removeChild(el[0].firstElementChild);
-	}
-}
-
 
 console.log('loaded!');
